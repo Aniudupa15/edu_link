@@ -1,16 +1,19 @@
-
+import 'package:edu_link/admin.dart';
 import 'package:edu_link/attendance.dart';
 import 'package:edu_link/login.dart';
 import 'package:edu_link/register.dart';
+import 'package:edu_link/user.dart';
 import 'package:flutter/material.dart';
 
-void main(){
+void main() {
   runApp(MaterialApp(
-    debugShowCheckedModeBanner: false,
-    initialRoute: 'attendance',
-    routes: {'login': (context) => const MyLogin(),
-    'register':(context) => const MyRegister(),
-    'attendance':(context) => const MapPage(),
-    }
-  ));
+      debugShowCheckedModeBanner: false,
+      initialRoute: 'admin*',
+      routes: {
+        'login': (context) => const MyLogin(),
+        'register': (context) => const MyRegister(),
+        'attendance': (context) => const MapPage(),
+        'user': (context) => const Myuser(),
+        'admin': (context) => const Myadmin(),
+      }));
 }

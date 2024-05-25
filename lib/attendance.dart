@@ -27,6 +27,7 @@ class _MapPageState extends State<MapPage> {
 
   void _checkUserLocation() async {
     GeoPoint? currentLocation = await controller.myLocation();
+    // ignore: unnecessary_null_comparison
     if (currentLocation != null) {
       bool isInArea = _isPointInBoundingBox(
         point: currentLocation,

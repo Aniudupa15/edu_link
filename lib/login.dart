@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class MyLogin extends StatefulWidget {
   const MyLogin({super.key});
@@ -12,7 +11,7 @@ class _MyLoginState extends State<MyLogin> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
           image: DecorationImage(
               image: AssetImage('assets/login.png'), fit: BoxFit.cover)),
       child: Scaffold(
@@ -20,8 +19,8 @@ class _MyLoginState extends State<MyLogin> {
         body: Stack(
           children: [
             Container(
-              padding: EdgeInsets.fromLTRB(55, 140, 90, 80),
-              child: Text(
+              padding: const EdgeInsets.fromLTRB(55, 140, 90, 80),
+              child: const Text(
                 "Welcome\nBack",
                 style: TextStyle(color: Colors.white, fontSize: 33),
               ),
@@ -41,7 +40,7 @@ class _MyLoginState extends State<MyLogin> {
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10))),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 30,
                     ),
                     TextField(
@@ -52,7 +51,7 @@ class _MyLoginState extends State<MyLogin> {
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10))),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 40,
                     ),
                     Row(
@@ -60,16 +59,16 @@ class _MyLoginState extends State<MyLogin> {
                       children: [
                         CircleAvatar(
                           radius: 30,
-                          backgroundColor: Color(0xff4c505b),
+                          backgroundColor: const Color(0xff4c505b),
                           child: IconButton(
                             color: Colors.white,
                             onPressed: () {},
-                            icon: Icon(Icons.arrow_forward),
+                            icon: const Icon(Icons.arrow_forward),
                           ),
                         )
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 40,
                     ),
                     Row(
@@ -79,7 +78,7 @@ class _MyLoginState extends State<MyLogin> {
                             onPressed: () {
                               Navigator.pushNamed(context, 'register');
                             },
-                            child: Text(
+                            child: const Text(
                               'SignUp',
                               style: TextStyle(
                                 decoration: TextDecoration.underline,
@@ -89,7 +88,7 @@ class _MyLoginState extends State<MyLogin> {
                             )),
                         TextButton(
                             onPressed: () {},
-                            child: Text(
+                            child: const Text(
                               'ForgotPassword',
                               style: TextStyle(
                                 decoration: TextDecoration.underline,

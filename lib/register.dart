@@ -12,7 +12,7 @@ class _MyRegisterState extends State<MyRegister> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
           image: DecorationImage(
               image: AssetImage('assets/register.png'), fit: BoxFit.cover)),
       child: Scaffold(
@@ -20,8 +20,8 @@ class _MyRegisterState extends State<MyRegister> {
         body: Stack(
           children: [
             Container(
-              padding: EdgeInsets.fromLTRB(55, 140, 90, 80),
-              child: Text(
+              padding: const EdgeInsets.fromLTRB(55, 140, 90, 80),
+              child: const Text(
                 "Create\nAccount",
                 style: TextStyle(color: Colors.white, fontSize: 33),
               ),
@@ -41,7 +41,7 @@ class _MyRegisterState extends State<MyRegister> {
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10))),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 30,
                     ),
                     TextField(
@@ -51,7 +51,7 @@ class _MyRegisterState extends State<MyRegister> {
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10))),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 30,
                     ),
                     TextField(
@@ -72,10 +72,10 @@ class _MyRegisterState extends State<MyRegister> {
                             });
                           },
                         ),
-                        Text('Faculty'),
+                        const Text('Faculty'),
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     Row(
@@ -83,16 +83,16 @@ class _MyRegisterState extends State<MyRegister> {
                       children: [
                         CircleAvatar(
                           radius: 30,
-                          backgroundColor: Color(0xff4c505b),
+                          backgroundColor: const Color(0xff4c505b),
                           child: IconButton(
                             color: Colors.white,
                             onPressed: () {},
-                            icon: Icon(Icons.arrow_forward),
+                            icon: const Icon(Icons.arrow_forward),
                           ),
                         )
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     Row(
@@ -102,7 +102,7 @@ class _MyRegisterState extends State<MyRegister> {
                             onPressed: () {
                               Navigator.pushNamed(context, 'login');
                             },
-                            child: Text(
+                            child: const Text(
                               'SignIn',
                               style: TextStyle(
                                 decoration: TextDecoration.underline,
@@ -112,7 +112,7 @@ class _MyRegisterState extends State<MyRegister> {
                             )),
                         TextButton(
                             onPressed: () {},
-                            child: Text(
+                            child: const Text(
                               'ForgotPassword',
                               style: TextStyle(
                                 decoration: TextDecoration.underline,
