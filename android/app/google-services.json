@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "260570123699",
+    "firebase_url": "https://edulink-afb64-default-rtdb.firebaseio.com",
+    "project_id": "edulink-afb64",
+    "storage_bucket": "edulink-afb64.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:260570123699:android:01d3f5c11e45f6bc860fc6",
+        "android_client_info": {
+          "package_name": "com.example.map_project"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBo6jneuSPicuyDyHK8hyr0RNvCeWLMAmM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

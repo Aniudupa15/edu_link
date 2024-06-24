@@ -41,8 +41,7 @@ class _MapPageState extends State<MapPage> {
             timeInSecForIosWeb: 10,
             backgroundColor: Colors.green,
             textColor: Colors.white,
-            fontSize: 10.0
-        );
+            fontSize: 10.0);
       } else {
         Fluttertoast.showToast(
             msg: "User is outside the specified location.",
@@ -51,8 +50,7 @@ class _MapPageState extends State<MapPage> {
             timeInSecForIosWeb: 10,
             backgroundColor: Colors.red,
             textColor: Colors.white,
-            fontSize: 10.0
-        );
+            fontSize: 10.0);
       }
     } else {
       Fluttertoast.showToast(
@@ -62,12 +60,12 @@ class _MapPageState extends State<MapPage> {
           timeInSecForIosWeb: 10,
           backgroundColor: Colors.orange,
           textColor: Colors.white,
-          fontSize: 10.0
-      );
+          fontSize: 10.0);
     }
   }
 
-  bool _isPointInBoundingBox({required GeoPoint point, required BoundingBox box}) {
+  bool _isPointInBoundingBox(
+      {required GeoPoint point, required BoundingBox box}) {
     return (point.latitude >= box.south &&
         point.latitude <= box.north &&
         point.longitude >= box.west &&
