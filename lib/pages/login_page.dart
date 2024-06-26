@@ -1,4 +1,5 @@
 import 'package:edu_link/helper/helper_function.dart';
+import 'package:edu_link/services/auth_services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:edu_link/components/my_button.dart';
@@ -20,7 +21,7 @@ class _LoginPageState extends State<LoginPage> {
 
   // login function
   Future<void> login() async {
-    // Implement your login logic here
+    // Show loading indicator
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -34,7 +35,7 @@ class _LoginPageState extends State<LoginPage> {
         email: emailController.text,
         password: passwordController.text,
       );
-      // ignore: use_build_context_synchronously
+      // Hide loading indicator
       if (context.mounted) Navigator.pop(context);
     } on FirebaseAuthException catch (e) {
       Navigator.pop(context);
@@ -69,7 +70,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 const SizedBox(height: 25),
                 // App name
-                Text(
+                const Text(
                   "E D U L I N K",
                   style: TextStyle(
                     fontSize: 20,
@@ -91,7 +92,6 @@ class _LoginPageState extends State<LoginPage> {
                   controller: passwordController,
                 ),
                 const SizedBox(height: 25),
-
                 // Faculty Checkbox and Forgot Password
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -117,7 +117,6 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ],
                 ),
-
                 const SizedBox(height: 25),
                 // Sign In Button
                 MyButton(
@@ -125,14 +124,41 @@ class _LoginPageState extends State<LoginPage> {
                   onTap: login,
                 ),
                 const SizedBox(height: 25),
+                // Continue with
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                  child: const Text(
+                    'Or continue with',
+                    style: TextStyle(color: Color.fromRGBO(57, 52, 52, 1)),
+                  ),
+                ),
+                const SizedBox(height: 45),
+                // Google and Apple sign-in buttons
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    GestureDetector(
+                      onTap: ()=>AuthServices().signInWithGoogle(), 
+                      child: Image.asset('assets/google.png', width: 50),
+                    ),
+                    const SizedBox(width: 25),
+                    GestureDetector(
+                      onTap: () {
+                        // Implement Apple sign-in logic here
+                      },
+                      child: Image.asset('assets/apple.png', width: 50),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 55),
                 // Don't have an account? Register here
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text("Don't have an account? "),
+                    const Text("Don't have an account? "),
                     GestureDetector(
                       onTap: widget.onTap,
-                      child: Text(
+                      child: const Text(
                         "Register here",
                         style: TextStyle(
                           fontWeight: FontWeight.bold,

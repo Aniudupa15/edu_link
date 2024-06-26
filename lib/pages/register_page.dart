@@ -1,6 +1,7 @@
 import 'dart:ffi';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:edu_link/services/auth_services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:edu_link/components/my_button.dart';
@@ -146,8 +147,42 @@ class _RegisterPageState extends State<RegisterPage> {
                   text: "Register",
                   onTap: register,
                 ),
+                const SizedBox(height: 15),
+
+
+                 const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 10.0),
+                  child: Text(
+                    'Or continue with',
+                    style: TextStyle(color: Color.fromRGBO(57, 52, 52, 1)),
+                  ),
+                ),
+
                 const SizedBox(height: 25),
-                // Already have an account? Login here
+
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    GestureDetector(
+                     onTap: ()=>AuthServices().signInWithGoogle(), 
+
+                      child: Image.asset('assets/google.png', width: 50),
+                    ),
+                    const SizedBox(width: 25),
+                    GestureDetector(
+                      onTap: () {
+                        // Implement Apple sign-in logic here
+                      },
+                      child: Image.asset('assets/apple.png', width: 50),
+                    ),
+                  ],
+                ),
+
+                const SizedBox(height: 25),
+
+            // Already have an account? Login here
+
+
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
