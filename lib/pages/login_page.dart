@@ -1,18 +1,15 @@
-import 'package:edu_link/helper/helper_function.dart';
-import 'package:edu_link/pages/studentHome.dart';
-import 'package:edu_link/services/auth_services.dart';
+import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
-import 'package:edu_link/components/my_button.dart';
-import 'package:edu_link/components/my_textfield.dart';
 
-import 'ParentHome.dart';
-import 'TeacherHome.dart';
+import '../components/my_button.dart';
+import '../components/my_textfield.dart';
+import '../services/auth_services.dart';
+
 class LoginPage extends StatefulWidget {
   final void Function()? onTap;
 
-  const LoginPage({super.key, required this.onTap});
+  const LoginPage({Key? key, required this.onTap}) : super(key: key);
 
   @override
   _LoginPageState createState() => _LoginPageState();
@@ -22,102 +19,86 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
-  // login function
-  Future<void> login() async {
-    // Show loading indicator
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (context) => const Center(
-        child: CircularProgressIndicator(),
-      ),
-    );
-
+  // Login function
+  void login() async {
     try {
-      UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+      UserCredential userCredential =
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: emailController.text,
         password: passwordController.text,
       );
 
-      // Hide loading indicator
-      if (context.mounted) Navigator.pop(context);
+      // Retrieve user role from Firestore
+      DocumentSnapshot userDoc = await FirebaseFirestore.instance
+          .collection("users")
+          .doc(userCredential.user!.email)
+          .get();
 
-      User? user = userCredential.user;
-      if (user != null) {
-        DocumentSnapshot userRoleDoc = await FirebaseFirestore.instance
-            .collection('userRoles')
-            .doc(user.uid)
-            .get();
-        String role = userRoleDoc['role'];
+      // Close the loading dialog
+      Navigator.pop(context);
 
-        // Navigate to the appropriate home page based on the role
-        if (role == 'teacher') {
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (context) => const TeacherHome()),
-          );
-        } else if (role == 'student') {
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (context) => const StudentHome()),
-          );
-        } else if (role == 'parent') {
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (context) => const ParentHome()),
-          );
-        } else {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text("Invalid user role")),
-          );
+      if (userDoc.exists && userDoc.data() != null) {
+        String role = userDoc.get('role');
+
+        // Navigate based on user role
+        switch (role) {
+          case 'Student':
+            Navigator.pushReplacementNamed(context, 'StudentHome');
+            break;
+          case 'Faculty':
+            Navigator.pushReplacementNamed(context, 'TeacherHome');
+            break;
+          case 'Parent':
+            Navigator.pushReplacementNamed(context, 'ParentHome');
+            break;
+          default:
+            displayMessageToUser('User role not found.');
         }
+      } else {
+        displayMessageToUser('User role not found.');
       }
     } on FirebaseAuthException catch (e) {
       Navigator.pop(context);
-      displayMessageToUser(e.code, context);
+      displayMessageToUser(e.message ?? 'An error occurred. Please try again.');
     } catch (e) {
       Navigator.pop(context);
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Error: $e")),
-      );
+      displayMessageToUser('An error occurred. Please try again.');
     }
   }
-
-  bool _isChecked = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.background,
-      body: Container(
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage('assets/register.png'),
+      backgroundColor: Theme.of(context).colorScheme.surface,
+      body: Stack(
+        fit: StackFit.expand,
+        children: [
+          Image.asset(
+            'assets/register.png',
             fit: BoxFit.cover,
           ),
-        ),
-        child: Center(
-          child: Padding(
+          SingleChildScrollView(
             padding: const EdgeInsets.all(25.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                const SizedBox(height: 90),
                 // Logo
                 Icon(
                   Icons.person,
                   size: 90,
-                  color: Theme.of(context).colorScheme.inversePrimary,
+                  color: Colors.white,
                 ),
                 const SizedBox(height: 25),
                 // App name
                 const Text(
-                  "E D U L I N K",
+                  "E D U - L I N K ",
                   style: TextStyle(
                     fontSize: 20,
                     color: Colors.white,
                   ),
                 ),
-                const SizedBox(height: 25),
+                const SizedBox(height: 50),
                 // Email TextField
                 MyTextfield(
                   hinttext: "Email",
@@ -131,31 +112,23 @@ class _LoginPageState extends State<LoginPage> {
                   obscuretext: true,
                   controller: passwordController,
                 ),
-                const SizedBox(height: 25),
-                // Faculty Checkbox and Forgot Password
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        Checkbox(
-                          value: _isChecked,
-                          onChanged: (value) {
-                            setState(() {
-                              _isChecked = value!;
-                            });
-                          },
+                const SizedBox(height: 5),
+                // Forgot Password
+                GestureDetector(
+                  onTap: () {
+                    // Implement forgot password functionality
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Text(
+                        "Forgot Password?",
+                        style: TextStyle(
+                          color: Theme.of(context).colorScheme.primary,
                         ),
-                        const Text('Faculty'),
-                      ],
-                    ),
-                    Text(
-                      "Forgot Password?",
-                      style: TextStyle(
-                        color: Theme.of(context).colorScheme.primary,
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
                 const SizedBox(height: 25),
                 // Sign In Button
@@ -163,8 +136,6 @@ class _LoginPageState extends State<LoginPage> {
                   text: "Login",
                   onTap: login,
                 ),
-                const SizedBox(height: 25),
-                // Continue with
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10.0),
                   child: const Text(
@@ -172,7 +143,7 @@ class _LoginPageState extends State<LoginPage> {
                     style: TextStyle(color: Color.fromRGBO(57, 52, 52, 1)),
                   ),
                 ),
-                const SizedBox(height: 45),
+                const SizedBox(height: 25),
                 // Google and Apple sign-in buttons
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -190,7 +161,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ],
                 ),
-                const SizedBox(height: 55),
+                const SizedBox(height: 25),
                 // Don't have an account? Register here
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -210,7 +181,17 @@ class _LoginPageState extends State<LoginPage> {
               ],
             ),
           ),
-        ),
+        ],
+      ),
+    );
+  }
+
+  // Helper function to display messages
+  void displayMessageToUser(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        duration: const Duration(seconds: 3),
       ),
     );
   }

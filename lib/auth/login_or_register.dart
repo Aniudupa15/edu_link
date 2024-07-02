@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:edu_link/pages/Login_page.dart';
-import 'package:edu_link/pages/register_page.dart';
+import '../pages/Login_page.dart';
+import '../pages/register_page.dart';
 
 class LoginOrRegister extends StatefulWidget {
-  const LoginOrRegister({super.key});
+  const LoginOrRegister({Key? key});
 
   @override
   State<LoginOrRegister> createState() => _LoginOrRegisterState();
@@ -11,38 +11,23 @@ class LoginOrRegister extends StatefulWidget {
 
 class _LoginOrRegisterState extends State<LoginOrRegister>
     with SingleTickerProviderStateMixin {
-  // initially show login page
-  bool showloginpage = true;
+  bool showLoginPage = true;
 
-  //reg/log
-
-  void togglepage() {
+  void togglePage() {
     setState(() {
-      showloginpage = !showloginpage;
+      showLoginPage = !showLoginPage;
     });
-    
-  }
-
-  late AnimationController _controller;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = AnimationController(vsync: this);
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    if (showloginpage) {
-      return LoginPage(onTap: togglepage);
-    } else {
-      return RegisterPage(onTap: togglepage);
-    }
+    return Scaffold(
+      body: AnimatedSwitcher(
+        duration: Duration(milliseconds: 300),
+        child: showLoginPage
+            ? LoginPage(onTap: togglePage)
+            : RegisterPage(onTap: togglePage),
+      ),
+    );
   }
 }

@@ -1,17 +1,13 @@
-import 'dart:ffi';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:edu_link/services/auth_services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:edu_link/components/my_button.dart';
 import 'package:edu_link/components/my_textfield.dart';
-import 'package:edu_link/helper/helper_function.dart';
 
 class RegisterPage extends StatefulWidget {
   final void Function()? onTap;
 
-  const RegisterPage({super.key, required this.onTap});
+  const RegisterPage({Key? key, required this.onTap}) : super(key: key);
 
   @override
   State<RegisterPage> createState() => _RegisterPageState();
@@ -22,71 +18,85 @@ class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController confirmPasswordController =
-      TextEditingController();
+  TextEditingController();
+  String selectedRole = 'Student'; // Default role
+
+  @override
+  void dispose() {
+    usernameController.dispose();
+    emailController.dispose();
+    passwordController.dispose();
+    confirmPasswordController.dispose();
+    super.dispose();
+  }
 
   // Register function
   void register() async {
-    // Show loading circle
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (context) => const Center(
-        child: CircularProgressIndicator(),
+    if (passwordController.text != confirmPasswordController.text) {
+      displayMessageToUser("Passwords don't match!");
+      return;
+    }
+
+    try {
+      UserCredential userCredential =
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: emailController.text,
+        password: passwordController.text,
+      );
+
+      await createUserDocument(userCredential);
+
+      Navigator.pop(context); // Close the loading dialog
+      if (context.mounted) Navigator.pop(context); // Navigate back or show success message
+    } on FirebaseAuthException catch (e) {
+      String message;
+      switch (e.code) {
+        case 'weak-password':
+          message = 'The password provided is too weak.';
+          break;
+        case 'email-already-in-use':
+          message = 'The account already exists for that email.';
+          break;
+        case 'invalid-email':
+          message = 'The email provided is not valid.';
+          break;
+        default:
+          message = 'An error occurred. Please try again.';
+      }
+      displayMessageToUser(message);
+    } catch (e) {
+      displayMessageToUser('An error occurred. Please try again.');
+    }
+  }
+
+  Future<void> createUserDocument(UserCredential userCredential) async {
+    if (userCredential.user != null) {
+      await FirebaseFirestore.instance
+          .collection("users")
+          .doc(userCredential.user!.email) // Use user UID as document ID
+          .set({
+        'email': userCredential.user!.email,
+        'username': usernameController.text,
+        'role': selectedRole,
+      });
+    }
+  }
+
+  void displayMessageToUser(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        duration: const Duration(seconds: 3),
       ),
     );
-
-    // Check if passwords match
-    if (passwordController.text != confirmPasswordController.text) {
-      Navigator.pop(context);
-      displayMessageToUser("Passwords don't match!", context);
-      return;
-    } else {
-      try {
-        UserCredential userCredential =
-            await FirebaseAuth.instance.createUserWithEmailAndPassword(
-          email: emailController.text,
-          password: passwordController.text,
-        );
-
-        //create a user document and collect them in firestore
-
-        createUserDocument(userCredential);
-
-        // Close the loading dialog
-        Navigator.pop(context);
-
-        // Navigate back or show success message
-        if (context.mounted) Navigator.pop(context);
-      } on FirebaseAuthException catch (e) {
-        Navigator.pop(context);
-        String message;
-        switch (e.code) {
-          case 'weak-password':
-            message = 'The password provided is too weak.';
-            break;
-          case 'email-already-in-use':
-            message = 'The account already exists for that email.';
-            break;
-          case 'invalid-email':
-            message = 'The email provided is not valid.';
-            break;
-          default:
-            message = 'An error occurred. Please try again.';
-        }
-        displayMessageToUser(message, context);
-      } catch (e) {
-        Navigator.pop(context);
-        displayMessageToUser('An error occurred. Please try again.', context);
-      }
-    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.background,
+      backgroundColor: Theme.of(context).colorScheme.surface,
       body: Container(
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           image: DecorationImage(
             image: AssetImage('assets/login.png'),
             fit: BoxFit.cover,
@@ -98,87 +108,75 @@ class _RegisterPageState extends State<RegisterPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                // Logo
                 Icon(
                   Icons.person,
                   size: 90,
-                  color: Theme.of(context).colorScheme.inversePrimary,
+                  color: Theme.of(context).colorScheme.primary,
                 ),
                 const SizedBox(height: 25),
-                // App name
                 const Text(
-                  "E D U L I N K",
+                  "E D U - L I N K",
                   style: TextStyle(
                     fontSize: 20,
                     color: Colors.white,
                   ),
                 ),
                 const SizedBox(height: 25),
-                // Username TextField
                 MyTextfield(
                   hinttext: "Username",
                   obscuretext: false,
                   controller: usernameController,
                 ),
                 const SizedBox(height: 25),
-                // Email TextField
                 MyTextfield(
                   hinttext: "Email",
                   obscuretext: false,
                   controller: emailController,
                 ),
                 const SizedBox(height: 25),
-                // Password TextField
                 MyTextfield(
                   hinttext: "Password",
                   obscuretext: true,
                   controller: passwordController,
                 ),
                 const SizedBox(height: 25),
-                // Confirm Password TextField
                 MyTextfield(
                   hinttext: "Confirm Password",
                   obscuretext: true,
                   controller: confirmPasswordController,
                 ),
                 const SizedBox(height: 25),
-                // Register Button
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    border: Border.all(color: Colors.grey),
+                    borderRadius: BorderRadius.circular(12.0),
+                  ),
+                  child: DropdownButton<String>(
+                    value: selectedRole,
+                    isExpanded: true,
+                    underline: SizedBox(),
+                    onChanged: (String? newValue) {
+                      setState(() {
+                        selectedRole = newValue!;
+                      });
+                    },
+                    items: <String>['Student', 'Teacher', 'Parent']
+                        .map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
+                  ),
+                ),
+                const SizedBox(height: 25),
                 MyButton(
                   text: "Register",
                   onTap: register,
                 ),
-                const SizedBox(height: 15),
-
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 10.0),
-                  child: Text(
-                    'Or continue with',
-                    style: TextStyle(color: Color.fromRGBO(57, 52, 52, 1)),
-                  ),
-                ),
-
                 const SizedBox(height: 25),
-
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    GestureDetector(
-                     onTap: () => AuthServices().signInWithGoogle(context), 
-                      child: Image.asset('assets/google.png', width: 50),
-                    ),
-                    const SizedBox(width: 25),
-                    GestureDetector(
-                      onTap: () {
-                        // Implement Apple sign-in logic here
-                      },
-                      child: Image.asset('assets/apple.png', width: 50),
-                    ),
-                  ],
-                ),
-
-                const SizedBox(height: 25),
-
-                // Already have an account? Login here
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -200,17 +198,5 @@ class _RegisterPageState extends State<RegisterPage> {
         ),
       ),
     );
-  }
-
-  Future<void> createUserDocument(UserCredential userCredential) async {
-    if (userCredential != null && userCredential.user != null) {
-      await FirebaseFirestore.instance
-          .collection("users")
-          .doc(userCredential.user!.email)
-          .set({
-        'email': userCredential.user!.email,
-        'username': usernameController.text,
-      });
-    }
   }
 }
