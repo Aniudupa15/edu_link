@@ -149,8 +149,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
                 const SizedBox(height: 15),
 
-
-                 const Padding(
+                const Padding(
                   padding: EdgeInsets.symmetric(horizontal: 10.0),
                   child: Text(
                     'Or continue with',
@@ -164,8 +163,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     GestureDetector(
-                     onTap: ()=>AuthServices().signInWithGoogle(), 
-
+                     onTap: () => AuthServices().signInWithGoogle(context), 
                       child: Image.asset('assets/google.png', width: 50),
                     ),
                     const SizedBox(width: 25),
@@ -180,9 +178,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
                 const SizedBox(height: 25),
 
-            // Already have an account? Login here
-
-
+                // Already have an account? Login here
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
