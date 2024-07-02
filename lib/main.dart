@@ -1,4 +1,4 @@
-import 'package:edu_link/pages/home.dart';
+
 import 'package:edu_link/auth/login_or_register.dart';
 import 'package:edu_link/auth/auth.dart'; // Ensure you import Authpage
 import 'package:firebase_core/firebase_core.dart';

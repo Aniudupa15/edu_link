@@ -1,11 +1,14 @@
 import 'package:edu_link/helper/helper_function.dart';
+import 'package:edu_link/pages/studentHome.dart';
 import 'package:edu_link/services/auth_services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:edu_link/components/my_button.dart';
 import 'package:edu_link/components/my_textfield.dart';
-import 'package:edu_link/pages/home.dart'; // Ensure you import HomeScreen
 
+import 'ParentHome.dart';
+import 'TeacherHome.dart';
 class LoginPage extends StatefulWidget {
   final void Function()? onTap;
 
@@ -31,20 +34,52 @@ class _LoginPageState extends State<LoginPage> {
     );
 
     try {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
+      UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: emailController.text,
         password: passwordController.text,
       );
+
       // Hide loading indicator
       if (context.mounted) Navigator.pop(context);
-      // Navigate to home page on successful login
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => HomeScreen()),
-      );
+
+      User? user = userCredential.user;
+      if (user != null) {
+        DocumentSnapshot userRoleDoc = await FirebaseFirestore.instance
+            .collection('userRoles')
+            .doc(user.uid)
+            .get();
+        String role = userRoleDoc['role'];
+
+        // Navigate to the appropriate home page based on the role
+        if (role == 'teacher') {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => const TeacherHome()),
+          );
+        } else if (role == 'student') {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => const StudentHome()),
+          );
+        } else if (role == 'parent') {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => const ParentHome()),
+          );
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text("Invalid user role")),
+          );
+        }
+      }
     } on FirebaseAuthException catch (e) {
       Navigator.pop(context);
       displayMessageToUser(e.code, context);
+    } catch (e) {
+      Navigator.pop(context);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Error: $e")),
+      );
     }
   }
 
