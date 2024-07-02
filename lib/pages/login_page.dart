@@ -4,7 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:edu_link/components/my_button.dart';
 import 'package:edu_link/components/my_textfield.dart';
-import 'package:flutter/widgets.dart';
+import 'package:edu_link/pages/home.dart'; // Ensure you import HomeScreen
 
 class LoginPage extends StatefulWidget {
   final void Function()? onTap;
@@ -37,6 +37,11 @@ class _LoginPageState extends State<LoginPage> {
       );
       // Hide loading indicator
       if (context.mounted) Navigator.pop(context);
+      // Navigate to home page on successful login
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => HomeScreen()),
+      );
     } on FirebaseAuthException catch (e) {
       Navigator.pop(context);
       displayMessageToUser(e.code, context);
@@ -138,7 +143,7 @@ class _LoginPageState extends State<LoginPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     GestureDetector(
-                      onTap: ()=>AuthServices().signInWithGoogle(), 
+                      onTap: () => AuthServices().signInWithGoogle(context),
                       child: Image.asset('assets/google.png', width: 50),
                     ),
                     const SizedBox(width: 25),
