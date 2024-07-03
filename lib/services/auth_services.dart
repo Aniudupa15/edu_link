@@ -59,7 +59,6 @@ class AuthServices {
             .doc(user.uid)
             .get();
         String role = userRoleDoc['role'];
-
         // Navigate to the appropriate home page based on the role
         if (role == 'Teacher') {
           Navigator.pushReplacement(
