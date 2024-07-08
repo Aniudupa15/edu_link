@@ -7,7 +7,7 @@ import '../pages/ParentHome.dart';
 import '../pages/TeacherHome.dart';
 import '../pages/StudentHome.dart';
 
-
+//changed document name to user email id
 class AuthServices {
   final _auth = FirebaseAuth.instance;
 
