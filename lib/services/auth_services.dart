@@ -56,7 +56,7 @@ class AuthServices {
       if (user != null) {
         DocumentSnapshot userRoleDoc = await FirebaseFirestore.instance
             .collection('users')
-            .doc(user.uid)
+            .doc(user.email)
             .get();
         String role = userRoleDoc['role'];
         // Navigate to the appropriate home page based on the role

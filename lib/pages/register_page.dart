@@ -7,7 +7,7 @@ import 'package:edu_link/components/my_textfield.dart';
 class RegisterPage extends StatefulWidget {
   final void Function()? onTap;
 
-  const RegisterPage({Key? key, required this.onTap}) : super(key: key);
+  const RegisterPage({super.key, required this.onTap});
 
   @override
   State<RegisterPage> createState() => _RegisterPageState();
@@ -17,9 +17,9 @@ class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  final TextEditingController confirmPasswordController =
-  TextEditingController();
+  final TextEditingController confirmPasswordController = TextEditingController();
   String selectedRole = 'Student'; // Default role
+  bool isLoading = false;
 
   @override
   void dispose() {
@@ -37,6 +37,10 @@ class _RegisterPageState extends State<RegisterPage> {
       return;
     }
 
+    setState(() {
+      isLoading = true;
+    });
+
     try {
       UserCredential userCredential =
       await FirebaseAuth.instance.createUserWithEmailAndPassword(
@@ -46,8 +50,10 @@ class _RegisterPageState extends State<RegisterPage> {
 
       await createUserDocument(userCredential);
 
-      Navigator.pop(context); // Close the loading dialog
-      if (context.mounted) Navigator.pop(context); // Navigate back or show success message
+      if (context.mounted) {
+        Navigator.pop(context); // Close the loading dialog if open
+        displayMessageToUser('Registration successful!');
+      }
     } on FirebaseAuthException catch (e) {
       String message;
       switch (e.code) {
@@ -66,6 +72,10 @@ class _RegisterPageState extends State<RegisterPage> {
       displayMessageToUser(message);
     } catch (e) {
       displayMessageToUser('An error occurred. Please try again.');
+    } finally {
+      setState(() {
+        isLoading = false;
+      });
     }
   }
 
@@ -96,7 +106,7 @@ class _RegisterPageState extends State<RegisterPage> {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           image: DecorationImage(
             image: AssetImage('assets/login.png'),
             fit: BoxFit.cover,
@@ -156,7 +166,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   child: DropdownButton<String>(
                     value: selectedRole,
                     isExpanded: true,
-                    underline: SizedBox(),
+                    underline: const SizedBox(),
                     onChanged: (String? newValue) {
                       setState(() {
                         selectedRole = newValue!;
@@ -173,8 +183,8 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
                 const SizedBox(height: 25),
                 MyButton(
-                  text: "Register",
-                  onTap: register,
+                  text: isLoading ? "Registering..." : "Register",
+                  onTap: isLoading ? null : register,
                 ),
                 const SizedBox(height: 25),
                 Row(

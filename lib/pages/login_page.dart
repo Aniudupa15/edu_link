@@ -9,7 +9,7 @@ import '../services/auth_services.dart';
 class LoginPage extends StatefulWidget {
   final void Function()? onTap;
 
-  const LoginPage({Key? key, required this.onTap}) : super(key: key);
+  const LoginPage({super.key, required this.onTap});
 
   @override
   _LoginPageState createState() => _LoginPageState();
@@ -21,6 +21,7 @@ class _LoginPageState extends State<LoginPage> {
 
   // Login function
   void login() async {
+    showLoadingDialog();
     try {
       UserCredential userCredential =
       await FirebaseAuth.instance.signInWithEmailAndPassword(
@@ -66,6 +67,18 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
+  void showLoadingDialog() {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) {
+        return const Center(
+          child: CircularProgressIndicator(),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -84,7 +97,7 @@ class _LoginPageState extends State<LoginPage> {
               children: [
                 const SizedBox(height: 90),
                 // Logo
-                Icon(
+                const Icon(
                   Icons.person,
                   size: 90,
                   color: Colors.white,
@@ -136,9 +149,9 @@ class _LoginPageState extends State<LoginPage> {
                   text: "Login",
                   onTap: login,
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                  child: const Text(
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 10.0),
+                  child: Text(
                     'Or continue with',
                     style: TextStyle(color: Color.fromRGBO(57, 52, 52, 1)),
                   ),
