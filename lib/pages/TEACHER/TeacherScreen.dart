@@ -1,11 +1,11 @@
-import 'package:edu_link/pages/GetNotes.dart';
-import 'package:edu_link/pages/MarksPage.dart';
+import 'package:edu_link/pages/STUDENT/GetNotes.dart';
+import 'package:edu_link/pages/TEACHER/MarksPage.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'UploadFIle.dart';
-import 'VideoLectures.dart';
-import 'checkAttendance.dart';
+import '../STUDENT/VideoLectures.dart';
+import '../STUDENT/checkAttendance.dart';
 
 class Teacher extends StatefulWidget {
   const Teacher({Key? key}) : super(key: key);

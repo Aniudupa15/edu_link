@@ -4,8 +4,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import '../pages/ParentHome.dart';
-import '../pages/TeacherHome.dart';
-import '../pages/StudentHome.dart';
+import '../pages/TEACHER/TeacherHome.dart';
+import '../pages/STUDENT/StudentHome.dart';
 
 //changed document name to user email id
 class AuthServices {

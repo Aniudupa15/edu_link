@@ -5,8 +5,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../pages/ParentHome.dart';
-import '../pages/TeacherHome.dart';
-import '../pages/StudentHome.dart';
+import '../pages/TEACHER/TeacherHome.dart';
+import '../pages/STUDENT/StudentHome.dart';
 
 class Authpage extends StatelessWidget {
   const Authpage({super.key});

@@ -1,6 +1,5 @@
-import 'package:edu_link/attendance.dart';
-import 'package:edu_link/pages/GradesPage.dart';
-import 'package:edu_link/pages/profile_page.dart';
+import 'package:edu_link/pages/STUDENT/attendance.dart';
+import 'package:edu_link/pages/STUDENT/profile_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
