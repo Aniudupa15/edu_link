@@ -67,7 +67,7 @@ To get Edu Link running on your local device, follow these steps:
 
 | Home Page                       | Student Circular               |
 |---------------------------------|--------------------------------|
-| ![Home Page](assets/screenshots/HomePage.jpg) | ![Student Circular](assets\screenshots\StudentCircular.jpg) |
+| ![Home Page](assets/screenshots/HomePage.jpg) | ![Student Circular](assets/screenshots/StudentCircular.jpg) |
 
 | Profile                         | Stream & ChatBot               |
 |---------------------------------|--------------------------------|
