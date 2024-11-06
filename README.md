@@ -59,14 +59,21 @@ To get Edu Link running on your local device, follow these steps:
     ```bash
     flutter run
     ```
-
 ## 📱 Screenshots
 
-| Home | Chat | Performance |
-|------|------|-------------|
-| Placeholder | Placeholder | Placeholder |
+| Login                           | Sign In                        | Home Page                      |
+|---------------------------------|--------------------------------|--------------------------------|
+| ![Login](Screenshots\SignIn.jpg) | ![Sign In](Screenshots\Register.jpg) | ![Home Page](Screenshots\HomePage.jpg) |
 
-> Note: Screenshots are placeholders; replace them with actual images from your app.
+| Student Circular                                      | Profile Section                | Video with Chat                |
+|-------------------------------------------------------|-------------------------------------------|--------------------------------|
+| ![Student Circular](Screenshots\Student Circular.jpg) | ![Profile Section](Screenshots\Profile.jpg) | ![Video with Chat](Screenshots\Stream & ChatBot.jpg) |
+
+| Attendance Tracking                                         | Give Attendance                                    |
+|-------------------------------------------------------------|----------------------------------------------------|
+| ![Attendance Tracking](Screenshots\Attendance Tracking.jpg) | ![Give Attendance](Screenshots\Give Attendace.jpg) |
+
+
 
 ## 📝 Roadmap
 
