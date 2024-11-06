@@ -71,11 +71,11 @@ To get Edu Link running on your local device, follow these steps:
 
 | Profile                         | Stream & ChatBot               |
 |---------------------------------|--------------------------------|
-| ![Profile](assets/screenshots/Profile.jpg) | ![Stream & ChatBot](assets/screenshots/Stream & ChatBot.jpg) |
+| ![Profile](assets/screenshots/Profile.jpeg) | ![Stream & ChatBot](assets/screenshots/Stream & ChatBot.jpg) |
 
 | Attendance Tracking             | Give Attendance                |
 |---------------------------------|--------------------------------|
-| ![Attendance Tracking](assets/screenshots/Attendance Tracking.jpg) | ![Give Attendance](assets/screenshots/Give Attendance.jpg) |
+| ![Attendance Tracking](assets/screenshots/Attendance Tracking.jpeg) | ![Give Attendance](assets/screenshots/Give Attendance.jpg) |
 
 
 
