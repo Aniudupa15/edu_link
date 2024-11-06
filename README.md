@@ -63,15 +63,15 @@ To get Edu Link running on your local device, follow these steps:
 
 | Login                           | Sign In                        | Home Page                      |
 |---------------------------------|--------------------------------|--------------------------------|
-| ![Login](Screenshots\SignIn.jpg) | ![Sign In](Screenshots\Register.jpg) | ![Home Page](Screenshots\HomePage.jpg) |
+| ![Login](assets/screenshots/login.png) | ![Sign In](assets/screenshots/signin.png) | ![Home Page](assets/screenshots/homepage.png) |
 
-| Student Circular                                      | Profile Section                | Video with Chat                |
-|-------------------------------------------------------|-------------------------------------------|--------------------------------|
-| ![Student Circular](Screenshots\Student Circular.jpg) | ![Profile Section](Screenshots\Profile.jpg) | ![Video with Chat](Screenshots\Stream & ChatBot.jpg) |
+| Student Circular                | Profile Section                | Video with Chat                |
+|---------------------------------|--------------------------------|--------------------------------|
+| ![Student Circular](assets/screenshots/student_circular.png) | ![Profile Section](assets/screenshots/profile_section.png) | ![Video with Chat](assets/screenshots/video_with_chat.png) |
 
-| Attendance Tracking                                         | Give Attendance                                    |
-|-------------------------------------------------------------|----------------------------------------------------|
-| ![Attendance Tracking](Screenshots\Attendance Tracking.jpg) | ![Give Attendance](Screenshots\Give Attendace.jpg) |
+| Attendance Tracking             |
+|---------------------------------|
+| ![Attendance Tracking](assets/screenshots/attendance_tracking.png) |
 
 
 
