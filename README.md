@@ -61,21 +61,21 @@ To get Edu Link running on your local device, follow these steps:
     ```
 ## 📱 Screenshots
 
-| Login                                  | Sign In                                   |
-|----------------------------------------|-------------------------------------------|
-| ![Login](assets/screenshots/login.png) | ![Sign In](assets/screenshots/signin.png) |
+| Sign In                         | Register                       |
+|---------------------------------|--------------------------------|
+| ![Sign In](assets/screenshots/SignIn.jpg) | ![Register](assets/screenshots/Register.jpg) |
 
-| Home Page                                     | Student Circular                                             |
-|-----------------------------------------------|--------------------------------------------------------------|
-| ![Home Page](assets/screenshots/homepage.png) | ![Student Circular](assets/screenshots/student_circular.png) |
+| Home Page                       | Student Circular               |
+|---------------------------------|--------------------------------|
+| ![Home Page](assets/screenshots/HomePage.jpg) | ![Student Circular](assets/screenshots/Student Circular.jpg) |
 
-| Profile Section                                            | Video with Chat                                            |
-|------------------------------------------------------------|------------------------------------------------------------|
-| ![Profile Section](assets/screenshots/profile_section.png) | ![Video with Chat](assets/screenshots/video_with_chat.png) |
+| Profile                         | Stream & ChatBot               |
+|---------------------------------|--------------------------------|
+| ![Profile](assets/screenshots/Profile.jpg) | ![Stream & ChatBot](assets/screenshots/Stream & ChatBot.jpg) |
 
-| Attendance Tracking                                                | Give Attendance                                      |
-|--------------------------------------------------------------------|------------------------------------------------------|
-| ![Attendance Tracking](assets/screenshots/attendance_tracking.png) | ![Give Attendance](assets/screenshots/give_attendance.png) |
+| Attendance Tracking             | Give Attendance                |
+|---------------------------------|--------------------------------|
+| ![Attendance Tracking](assets/screenshots/Attendance Tracking.jpg) | ![Give Attendance](assets/screenshots/Give Attendance.jpg) |
 
 
 
